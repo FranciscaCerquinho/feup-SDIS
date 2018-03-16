@@ -1,11 +1,11 @@
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+
 public class ClientPeer {
-	
+
 	private ClientPeer(){}
-	
-	
+
 	public static void main(String[] args){
 			
 		try{

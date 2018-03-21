@@ -19,7 +19,6 @@ public class Peer implements RMIinterface{
 	}
 	public static void main(String[] args){
 		
-		System.setProperty()
 		
 		try{
 			
@@ -32,7 +31,7 @@ public class Peer implements RMIinterface{
 			
 			System.err.println("Server ready");	
 		}catch(Exception e){
-			System.err.println("Server exception: " + e.toString());
+			System.err.println("Peer exception: " + e.toString());
 			e.printStackTrace();
 		}
 		

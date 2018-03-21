@@ -7,10 +7,16 @@ public class App {
 	private App(){}
 
 	public static void main(String[] args){
+
+		peer_id = args[0];
+
+
+
+
 			
 		try{
 			Registry registry = LocateRegistry.getRegistry(1099);
-			RMIinterface stub = (RMIinterface) registry.lookup("trial");
+			RMIinterface stub = (RMIinterface) registry.lookup(peer_id);
 			String response = stub.helloWorld();
 			System.out.println("response: " + response);
 		}catch(Exception e){

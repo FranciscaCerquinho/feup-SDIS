@@ -8,16 +8,18 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class Peer implements RMIinterface{
 	
-	private static int peerID;
+	private static String peerID;
 	private static MulticastSocket socket;
 	
 	
-	public Peer(){}
+	private Peer(){}
 	
 	public String helloWorld(){
-		return "Hello, world!";
+		return "Hello, world! I'm peer number " + this.peerID;
 	}
 	public static void main(String[] args){
+
+		peerID = args[0];
 		
 		
 		try{
@@ -27,9 +29,10 @@ public class Peer implements RMIinterface{
 			
 			
 			Registry registry = LocateRegistry.getRegistry();
-			registry.bind("trial", stub);
 			
-			System.err.println("Server ready");	
+			registry.bind(peerID, stub);
+			
+			System.err.println("Peer ready");	
 		}catch(Exception e){
 			System.err.println("Peer exception: " + e.toString());
 			e.printStackTrace();

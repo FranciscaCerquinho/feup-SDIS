@@ -4,11 +4,14 @@ import java.rmi.registry.Registry;
 
 public class App {
 
-	private App(){}
+	public App(){}
 
 	public static void main(String[] args){
 
-		peer_id = args[0];
+		String peer_id = args[0];
+
+		System.out.println(peer_id);
+
 
 
 

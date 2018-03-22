@@ -9,10 +9,15 @@ import java.rmi.server.UnicastRemoteObject;
 public class Peer implements RMIinterface{
 	
 	private static String peerID;
-	private static MulticastSocket socket;
+	private MultiCastChannel mc_channel;
 	
 	
-	private Peer(){}
+	private Peer(){
+
+		this.mc_channel = new MultiCastChannel("224.0.0.3", 4444):
+
+
+	}
 	
 	public String helloWorld(){
 		return "Hello, world! I'm peer number " + this.peerID;
@@ -20,12 +25,13 @@ public class Peer implements RMIinterface{
 	public static void main(String[] args){
 
 		peerID = args[0];
+
 		
 		
 		try{
 			
 			Peer obj = new Peer();
-			RMIinterface stub = (RMIinterface) UnicastRemoteObject.exportObject(obj,0);
+			RMIinterface stub = (RMIinterface) UnicastRemoteObject.exportObject(obj, 0);
 			
 			
 			Registry registry = LocateRegistry.getRegistry();

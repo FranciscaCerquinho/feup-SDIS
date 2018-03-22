@@ -4,6 +4,7 @@ import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.net.UnknownHostException;
 
 
 public class Peer implements RMIinterface{
@@ -12,10 +13,14 @@ public class Peer implements RMIinterface{
 	private MultiCastChannel mc_channel;
 	
 	
-	private Peer(){
+	private Peer() throws UnknownHostException{
 
-		this.mc_channel = new MultiCastChannel("224.0.0.3", 4444):
-
+		try{
+			this.mc_channel = new MultiCastChannel("224.0.0.3", 4444);
+		}
+		catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 
 	}
 	

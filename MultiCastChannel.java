@@ -11,13 +11,18 @@ public class MultiCastChannel{
 	private InetAddress address;
 	private int port;
 
-	private MultiCastChannel(String address, int port) throws UnknownHostException{
+	public MultiCastChannel(String address, int port) throws UnknownHostException{
 
-		this.address = InetAddress.getByName(address);
-		this.port = port;
+		try {
+			this.address = InetAddress.getByName(address);
+			this.port = port;
+
+		}
+		catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 
 	}
-
 
 	public void sendMessage(String peer_sender, String message) throws UnknownHostException, InterruptedException{
 

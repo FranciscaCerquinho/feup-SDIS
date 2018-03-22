@@ -1,7 +1,7 @@
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-
+//ligação ao servidor
 public class App {
 
 	public App(){}

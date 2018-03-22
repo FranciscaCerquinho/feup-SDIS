@@ -11,8 +11,7 @@ public class Peer implements RMIinterface{
 	
 	private static String peerID;
 	private MultiCastChannel mc_channel;
-	
-	
+
 	private Peer() throws UnknownHostException{
 
 		try{
@@ -26,6 +25,7 @@ public class Peer implements RMIinterface{
 	
 	public String helloWorld(){
 		return "Hello, world! I'm peer number " + this.peerID;
+		
 	}
 	public static void main(String[] args){
 

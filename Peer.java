@@ -7,10 +7,11 @@ import java.rmi.server.UnicastRemoteObject;
 import java.net.UnknownHostException;
 
 
-public class Peer implements RMIinterface{
+public class Peer implements RMIinterface {
 	
 	private static String peerID;
 	private static MultiCastChannel mc_channel;
+	private static String peer_sender;
 
 	private Peer() throws UnknownHostException{
 
@@ -23,13 +24,18 @@ public class Peer implements RMIinterface{
 
 	}
 	
-	public void message(){
+	public void message(String peer_id) throws UnknownHostException, InterruptedException {
 
+		peer_sender = peer_id;
+		System.out.println(peer_sender+peer_id);
+		
 		System.out.println("Hello, world! I'm peer number " + this.peerID);
+
 		mc_channel.sendMessage(this.peerID, "Hello peer");
+			
 		
 	}
-	public static void main(String[] args){
+	public static void main(String[] args) throws UnknownHostException{
 
 		peerID = args[0];
 
@@ -52,7 +58,9 @@ public class Peer implements RMIinterface{
 		}
 		
 		while(true){
+			if(peerID != peer_sender){
 			mc_channel.receiveMessage();
+		}else break;
 		}
 		
 	}

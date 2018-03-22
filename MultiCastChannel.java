@@ -38,6 +38,7 @@ public class MultiCastChannel{
 			System.out.println("Initiator peer sent packet with: " + message);
 		} catch(IOException ex){
 			ex.printStackTrace();
+
 		}
 
 

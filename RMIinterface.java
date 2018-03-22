@@ -7,6 +7,6 @@ public interface RMIinterface extends Remote{
 	//void restore() throws RemoteException;
 	//void delete() throws RemoteException;
 	//void reclaim() throws RemoteException;
-	String helloWorld() throws RemoteException;
+	void message() throws RemoteException;
 	
 }

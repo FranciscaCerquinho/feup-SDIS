@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 public class Peer implements RMIinterface{
 	
 	private static String peerID;
-	private MultiCastChannel mc_channel;
+	private static MultiCastChannel mc_channel;
 
 	private Peer() throws UnknownHostException{
 
@@ -23,8 +23,10 @@ public class Peer implements RMIinterface{
 
 	}
 	
-	public String helloWorld(){
-		return "Hello, world! I'm peer number " + this.peerID;
+	public void message(){
+
+		System.out.println("Hello, world! I'm peer number " + this.peerID);
+		mc_channel.sendMessage(this.peerID, "Hello peer");
 		
 	}
 	public static void main(String[] args){
@@ -49,7 +51,9 @@ public class Peer implements RMIinterface{
 			e.printStackTrace();
 		}
 		
-		
+		while(true){
+			mc_channel.receiveMessage();
+		}
 		
 	}
 	

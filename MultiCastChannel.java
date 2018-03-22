@@ -8,8 +8,8 @@ import java.net.UnknownHostException;
 
 public class MultiCastChannel{
 
-	private InetAddress address;
-	private int port;
+	private static InetAddress address;
+	private static int port;
 
 	public MultiCastChannel(String address, int port) throws UnknownHostException{
 
@@ -24,7 +24,7 @@ public class MultiCastChannel{
 
 	}
 
-	public void sendMessage(String peer_sender, String message) throws UnknownHostException, InterruptedException{
+	public static void sendMessage(String peer_sender, String message) throws UnknownHostException, InterruptedException{
 
 
 		//open a datagramsocket to send data
@@ -32,7 +32,7 @@ public class MultiCastChannel{
 		try(DatagramSocket senderSocket = new DatagramSocket()){
 
 			//create a packet that will contain the data
-			DatagramPacket msgPacket = new DatagramPacket(message.getBytes(),message.getBytes().length,this.address,this.port);
+			DatagramPacket msgPacket = new DatagramPacket(message.getBytes(),message.getBytes().length,address,port);
 			senderSocket.send(msgPacket);
 
 			System.out.println("Initiator peer sent packet with: " + message);
@@ -41,11 +41,12 @@ public class MultiCastChannel{
 		}
 
 
+
 	}
 
 
 
-	public void receiveMessage() throws UnknownHostException {
+	public static void receiveMessage() throws UnknownHostException {
 
 		//buffer of bytes to store incoming bytes from the initiator peer
 
@@ -57,7 +58,7 @@ public class MultiCastChannel{
 
 			//join the group
 
-			receiverSocket.joinGroup(this.address);
+			receiverSocket.joinGroup(address);
 
 			while(true){
 
@@ -74,6 +75,7 @@ public class MultiCastChannel{
 		}catch(IOException ex){
 			ex.printStackTrace();
 		}
+
 
 	}
 

@@ -20,8 +20,8 @@ public class App {
 		try{
 			Registry registry = LocateRegistry.getRegistry(1099);
 			RMIinterface stub = (RMIinterface) registry.lookup(peer_id);
-			String response = stub.helloWorld();
-			System.out.println("response: " + response);
+			stub.message();
+
 		}catch(Exception e){
 			System.err.println("App exception: " + e.toString());
 			e.printStackTrace();

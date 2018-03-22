@@ -14,13 +14,14 @@ public class Peer implements RMIinterface{
 	
 	private Peer(){
 
-		this.mc_channel = new MultiCastChannel("224.0.0.3", 4444):
+		this.mc_channel = new MultiCastChannel("224.0.0.3", 4444);
 
 
 	}
 	
 	public String helloWorld(){
 		return "Hello, world! I'm peer number " + this.peerID;
+		
 	}
 	public static void main(String[] args){
 

@@ -11,7 +11,6 @@ public class Peer implements RMIinterface {
 	
 	private static String peerID;
 	private static MultiCastChannel mc_channel;
-	private static String peer_sender;
 
 	private Peer() throws UnknownHostException{
 
@@ -24,22 +23,42 @@ public class Peer implements RMIinterface {
 
 	}
 	
-	public void message(String peer_id) throws UnknownHostException, InterruptedException {
+	public void message(String message) throws UnknownHostException, InterruptedException {
 
-		peer_sender = peer_id;
-		System.out.println(peer_sender+peer_id);
 		
 		System.out.println("Hello, world! I'm peer number " + this.peerID);
 
-		mc_channel.sendMessage(this.peerID, "Hello peer");
+		mc_channel.sendMessage(this.peerID, message);
+
 			
 		
 	}
+
+	public void backup() throws RemoteException, UnknownHostException, InterruptedException{
+		System.out.println("Chose backup subprotocol");
+	}
+
+	public void restore() throws RemoteException, UnknownHostException, InterruptedException{
+		System.out.println("Chose restore subprotocol");
+	}
+
+	public void delete() throws RemoteException, UnknownHostException, InterruptedException{
+		System.out.println("Chose delete subprotocol");
+	}
+
+	public void reclaim() throws RemoteException, UnknownHostException, InterruptedException{
+		System.out.println("Chose reclaim subprotocol");
+	}
+
+	public void state() throws RemoteException, UnknownHostException, InterruptedException{
+		System.out.println("Chose state subprotocol");
+	}
+
+
 	public static void main(String[] args) throws UnknownHostException{
 
 		peerID = args[0];
 
-		
 		
 		try{
 			
@@ -58,9 +77,7 @@ public class Peer implements RMIinterface {
 		}
 		
 		while(true){
-			if(peerID != peer_sender){
 			mc_channel.receiveMessage();
-		}else break;
 		}
 		
 	}

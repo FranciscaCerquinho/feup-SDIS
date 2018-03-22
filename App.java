@@ -9,18 +9,77 @@ public class App {
 	public static void main(String[] args){
 
 		String peer_id = args[0];
-
-		System.out.println(peer_id);
-
-
-
-
-
+		String command = args[1];
+		RMIinterface stub;
 			
 		try{
 			Registry registry = LocateRegistry.getRegistry(1099);
-			RMIinterface stub = (RMIinterface) registry.lookup(peer_id);
-			stub.message(peer_id);
+			stub = (RMIinterface) registry.lookup(peer_id);
+
+		
+
+		switch(command){
+
+			case "backup":
+			try{
+				stub.backup();
+				stub.message("Chose " + command + " protocol");
+			}catch(Exception e){
+				System.err.println("App exception: " + e.toString());
+				e.printStackTrace();
+		}
+				break;
+
+			case "restore":
+			try{
+				stub.restore();
+				stub.message("Chose " + command + " protocol");
+			}catch(Exception e){
+				System.err.println("App exception: " + e.toString());
+				e.printStackTrace();
+		}
+			
+				break;
+	
+
+			case "delete":
+				try{
+				stub.reclaim();
+				stub.message("Chose " + command + " protocol");
+			}catch(Exception e){
+				System.err.println("App exception: " + e.toString());
+				e.printStackTrace();
+		}				break;
+
+			case "reclaim":
+				try{
+				stub.delete();
+				stub.message("Chose " + command + " protocol");
+			}catch(Exception e){
+				System.err.println("App exception: " + e.toString());
+				e.printStackTrace();
+			}			
+			break;
+
+			case "state":
+				try{
+				stub.state();
+				stub.message("Chose " + command + " protocol");
+			}catch(Exception e){
+				System.err.println("App exception: " + e.toString());
+				e.printStackTrace();
+		}				break;
+
+				default:
+
+				System.out.println("Wrong usage of operation");
+				break;
+
+
+
+
+		}
+
 		}catch(Exception e){
 			System.err.println("App exception: " + e.toString());
 			e.printStackTrace();

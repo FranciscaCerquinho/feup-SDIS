@@ -1,12 +1,12 @@
 
 public class Chunk{
 
-    private static String fileID;
+  /*  private static String fileID;
     private static int chunkNo;
     private static int chunkReplication;
-    private static String content;
+    private static byte[] content;
 
-    public Chunk(String fileID, int chunkNo, int chunkReplication, String content){
+    public Chunk(String fileID, int chunkNo, int chunkReplication, byte[] content) extends File{
 
         this.fileID=fileID;
         this.chunkNo=chunkNo;
@@ -26,7 +26,7 @@ public class Chunk{
         return chunkReplication;
     }
 
-    public static String getContent() {
+    public static byte[] getContent() {
         return content;
-    }
+    }*/
 }

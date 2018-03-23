@@ -90,16 +90,10 @@ public class Peer implements RMIinterface {
 			e.printStackTrace();
 		}
 		
-		//while(true){
-		//	mc_channel.receiveMessage();
-		//}
+		
 		exec.execute(mc_channel);
-		//exec.execute(mc_channel);
+		
 
 		
 	}
-	
-	
-	
-	
 }

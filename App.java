@@ -11,7 +11,7 @@ public class App {
 		String peer_id = args[0];
 		String command = args[1];
 		String file = args[2];
-		int RepDegree = args[3];
+		int RepDegree = Integer.parseInt(args[3]);
 		RMIinterface stub;
 			
 		try{

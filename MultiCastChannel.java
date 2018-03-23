@@ -6,12 +6,15 @@ import java.net.DatagramSocket;
 import java.net.UnknownHostException;
 
 
-public class MultiCastChannel{
+public class MultiCastChannel implements Runnable{
 
 	private static InetAddress address;
 	private static int port;
+	private static MulticastSocket receiverSocket;
+	private static String peer_sending;
+	private static String peer_subscribed;
 	
-	public MultiCastChannel(String address, int port) throws UnknownHostException{
+	public MultiCastChannel(String address, int port ) throws UnknownHostException{
 
 		try {
 			this.address = InetAddress.getByName(address);
@@ -24,8 +27,14 @@ public class MultiCastChannel{
 
 	}
 
+
+
+	public void setSubscribe(String peer_subscribe_id){
+		peer_subscribed = peer_subscribe_id;
+	}
 	public static void sendMessage(String peer_sender, String message) throws UnknownHostException, InterruptedException{
 
+		peer_sending = peer_sender;
 		//open a datagramsocket to send data
 			
       
@@ -45,7 +54,6 @@ public class MultiCastChannel{
 
 	}
 
-/*
 	public static void openSocket(){
 		try{
 			receiverSocket = new MulticastSocket(port);
@@ -56,38 +64,56 @@ public class MultiCastChannel{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-*/
-	//}
 
-public static void receiveMessage() throws UnknownHostException {
+	}
 
+//public static void receiveMessage() throws UnknownHostException {
+	@Override
+	public void run(){
 		//buffer of bytes to store incoming bytes from the initiator peer
 
+		/*System.out.println("I AM ***" + peer_subscribed);
+		for(int i=0; i<10;i++){
+			System.out.println("result: " + i);
+
+		}*/
+
 		byte[] buf = new byte[256];
+		openSocket();
 
-		//multicast socket that can be in a group
-
-		try(MulticastSocket receiverSocket = new MulticastSocket(port)){
-
-			//join the group
-
-			receiverSocket.joinGroup(address);
-
+		try{
 			while(true){
 
 				DatagramPacket msgReceiverPacket = new DatagramPacket(buf,buf.length);
 				receiverSocket.receive(msgReceiverPacket);
 
+				if(peer_subscribed != peer_sending){
+
+				
+
 				String answer = new String(buf, 0, buf.length);
 
 				System.out.println("Peer received msg: " + answer);
+				break;
+			} else{
 
+							System.out.println("hi");
+
+
+				
 			}
+			
+			}
+
+
 
 
 		}catch(IOException ex){
 			ex.printStackTrace();
 		}
+		//catch(InterruptedException ex){
+		//	ex.printStackTrace();
+		//}
 
 
 	}

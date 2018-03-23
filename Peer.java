@@ -16,9 +16,11 @@ public class Peer implements RMIinterface {
 	
 	private static String peerID;
 	private static MultiCastChannel mc_channel;
+	private static ExecutorService exec;
 
 	private Peer() throws UnknownHostException{
 
+			exec = Executors.newFixedThreadPool(5);
 		try{
 			this.mc_channel = new MultiCastChannel("224.0.0.4", 8888);
 		}
@@ -41,6 +43,7 @@ public class Peer implements RMIinterface {
 
 	public void backup() throws RemoteException, UnknownHostException, InterruptedException{
 		System.out.println("Chose backup subprotocol");
+
 	}
 
 	public void restore() throws RemoteException, UnknownHostException, InterruptedException{
@@ -62,13 +65,16 @@ public class Peer implements RMIinterface {
 
 	public static void main(String[] args) throws UnknownHostException{
 
-		//ExecutorService exec = Executors.newFixedThreadPool(5);
+		
 		peerID = args[0];
+
+
 
 		
 		try{
 			
 			Peer obj = new Peer();
+			obj.mc_channel.setSubscribe(peerID);
 			RMIinterface stub = (RMIinterface) UnicastRemoteObject.exportObject(obj, 0);
 			
 			
@@ -82,11 +88,10 @@ public class Peer implements RMIinterface {
 			e.printStackTrace();
 		}
 		
-		while(true){
-			mc_channel.receiveMessage();
-		}
-		//exec.execute(mc_channel);
-		//exec.execute(mc_channel);
+		//while(true){
+		//	mc_channel.receiveMessage();
+		//}
+		exec.execute(mc_channel);
 		//exec.execute(mc_channel);
 
 		

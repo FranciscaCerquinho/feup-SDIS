@@ -67,16 +67,9 @@ public class MultiCastChannel implements Runnable{
 
 	}
 
-//public static void receiveMessage() throws UnknownHostException {
 	@Override
 	public void run(){
-		//buffer of bytes to store incoming bytes from the initiator peer
-
-		/*System.out.println("I AM ***" + peer_subscribed);
-		for(int i=0; i<10;i++){
-			System.out.println("result: " + i);
-
-		}*/
+		
 
 		byte[] buf = new byte[256];
 		openSocket();
@@ -103,10 +96,7 @@ public class MultiCastChannel implements Runnable{
 		}catch(IOException ex){
 			ex.printStackTrace();
 		}
-		//catch(InterruptedException ex){
-		//	ex.printStackTrace();
-		//}
-
+		
 
 	}
 

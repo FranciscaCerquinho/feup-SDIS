@@ -6,6 +6,11 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.net.UnknownHostException;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+
+
 
 public class Peer implements RMIinterface {
 	
@@ -15,11 +20,12 @@ public class Peer implements RMIinterface {
 	private Peer() throws UnknownHostException{
 
 		try{
-			this.mc_channel = new MultiCastChannel("224.0.0.3", 4444);
+			this.mc_channel = new MultiCastChannel("224.0.0.4", 8888);
 		}
 		catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
+
 
 	}
 	
@@ -29,7 +35,7 @@ public class Peer implements RMIinterface {
 
 		mc_channel.sendMessage(this.peerID, message);
 
-			
+					
 		
 	}
 
@@ -56,6 +62,7 @@ public class Peer implements RMIinterface {
 
 	public static void main(String[] args) throws UnknownHostException{
 
+		//ExecutorService exec = Executors.newFixedThreadPool(5);
 		peerID = args[0];
 
 		
@@ -78,6 +85,10 @@ public class Peer implements RMIinterface {
 		while(true){
 			mc_channel.receiveMessage();
 		}
+		//exec.execute(mc_channel);
+		//exec.execute(mc_channel);
+		//exec.execute(mc_channel);
+
 		
 	}
 	

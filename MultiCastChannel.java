@@ -10,7 +10,7 @@ public class MultiCastChannel{
 
 	private static InetAddress address;
 	private static int port;
-
+	
 	public MultiCastChannel(String address, int port) throws UnknownHostException{
 
 		try {
@@ -26,9 +26,9 @@ public class MultiCastChannel{
 
 	public static void sendMessage(String peer_sender, String message) throws UnknownHostException, InterruptedException{
 
-
 		//open a datagramsocket to send data
-
+			
+      
 		try(DatagramSocket senderSocket = new DatagramSocket()){
 
 			//create a packet that will contain the data
@@ -45,9 +45,21 @@ public class MultiCastChannel{
 
 	}
 
+/*
+	public static void openSocket(){
+		try{
+			receiverSocket = new MulticastSocket(port);
 
+			//join the group
 
-	public static void receiveMessage() throws UnknownHostException {
+			receiverSocket.joinGroup(address);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+*/
+	//}
+
+public static void receiveMessage() throws UnknownHostException {
 
 		//buffer of bytes to store incoming bytes from the initiator peer
 

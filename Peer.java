@@ -22,7 +22,7 @@ public class Peer implements RMIinterface {
 
 			exec = Executors.newFixedThreadPool(5);
 		try{
-			this.mc_channel = new MultiCastChannel("224.0.0.4", 8888);
+			this.mc_channel = new MultiCastChannel("228.0.0.4", 8080);
 		}
 		catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -67,11 +67,13 @@ public class Peer implements RMIinterface {
 
 		
 		peerID = args[0];
+        System.setProperty("java.net.preferIPv4Stack", "true");
 
 
 
 		
 		try{
+
 			
 			Peer obj = new Peer();
 			obj.mc_channel.setSubscribe(peerID);

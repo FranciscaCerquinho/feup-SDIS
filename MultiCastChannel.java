@@ -87,21 +87,13 @@ public class MultiCastChannel implements Runnable{
 				DatagramPacket msgReceiverPacket = new DatagramPacket(buf,buf.length);
 				receiverSocket.receive(msgReceiverPacket);
 
-				if(peer_subscribed != peer_sending){
-
-				
+				if(peer_subscribed != peer_sending){			
 
 				String answer = new String(buf, 0, buf.length);
 
 				System.out.println("Peer received msg: " + answer);
 				break;
-			} else{
-
-							System.out.println("hi");
-
-
-				
-			}
+			} 
 			
 			}
 

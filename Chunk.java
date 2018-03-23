@@ -12,8 +12,21 @@ public class Chunk{
         this.chunkNo=chunkNo;
         this.chunkReplication=chunkReplication;
         this.content=content;
-        
-
     }
 
+    public static String getFileID(){
+        return fileID;
+    }
+
+    public static int getChunkNo(){
+        return chunkNo;
+    }
+
+    public static int getChunkReplication() {
+        return chunkReplication;
+    }
+
+    public static String getContent() {
+        return content;
+    }
 }

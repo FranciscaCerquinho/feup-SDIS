@@ -2,6 +2,7 @@ import java.net.UnknownHostException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.*;
 
 public class Backup{
 
@@ -16,11 +17,13 @@ public class Backup{
     public void message(String message) throws UnknownHostException, InterruptedException {
 
         try {
+
+            ArrayList<Chunk> chunks = new ArrayList<Chunk>();
+            int chunkID=0;
+
             while (true) {
 
                 File f = new File(this.filename);
-
-                //the input.dat is the file to load into memory.
 
                 FileInputStream fis = new FileInputStream(f);
 
@@ -38,6 +41,8 @@ public class Backup{
 
                         byte[] fileData = buffer.toByteArray();
                         String test = new String(fileData);
+
+                        //chunks.add(new Chunk());
                     }
 
                 }

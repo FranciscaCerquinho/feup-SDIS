@@ -20,7 +20,7 @@ public class Peer implements RMIinterface {
 	private Peer() throws UnknownHostException{
 
 		try{
-			this.mc_channel = new MultiCastChannel("224.0.0.4", 8888);
+			this.mc_channel = new MultiCastChannel("228.0.0.4", 8080);
 		}
 		catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -64,9 +64,10 @@ public class Peer implements RMIinterface {
 
 		//ExecutorService exec = Executors.newFixedThreadPool(5);
 		peerID = args[0];
+        System.setProperty("java.net.preferIPv4Stack", "true");
 
-		
-		try{
+
+        try{
 			
 			Peer obj = new Peer();
 			RMIinterface stub = (RMIinterface) UnicastRemoteObject.exportObject(obj, 0);

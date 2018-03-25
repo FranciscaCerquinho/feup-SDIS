@@ -1,12 +1,23 @@
+import java.net.UnknownHostException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.security.MessageDigest;
+import java.util.List;
 
-public class Chunk{
 
-  /*  private static String fileID;
+
+public class Chunk {
+
+    private static String fileID;
     private static int chunkNo;
     private static int chunkReplication;
     private static byte[] content;
 
-    public Chunk(String fileID, int chunkNo, int chunkReplication, byte[] content) extends File{
+    public Chunk(String fileID, int chunkNo, int chunkReplication, byte[] content){
 
         this.fileID=fileID;
         this.chunkNo=chunkNo;
@@ -28,5 +39,5 @@ public class Chunk{
 
     public static byte[] getContent() {
         return content;
-    }*/
+    }
 }

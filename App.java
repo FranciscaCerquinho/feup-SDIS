@@ -25,7 +25,7 @@ public class App {
 			case "backup":
 			try{
 				stub.backup();
-				stub.message("Chose " + command + " protocol");
+				//stub.message("Backed up");
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());
 				e.printStackTrace();

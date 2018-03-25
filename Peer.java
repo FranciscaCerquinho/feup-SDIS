@@ -9,6 +9,9 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import java.io.File;
+
+
 
 
 
@@ -42,7 +45,7 @@ public class Peer implements RMIinterface {
 	}
 
 	public void backup() throws RemoteException, UnknownHostException, InterruptedException{
-		System.out.println("Chose backup subprotocol");
+		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\estrada.jpg"),2));
 
 	}
 

@@ -44,8 +44,8 @@ public class Peer implements RMIinterface {
 		
 	}
 
-	public void backup() throws RemoteException, UnknownHostException, InterruptedException{
-		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\estrada.jpg"),2));
+	public void backup(String fileID) throws RemoteException, UnknownHostException, InterruptedException{
+		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\"+fileID),2));
 
 	}
 

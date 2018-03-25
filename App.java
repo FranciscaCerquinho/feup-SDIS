@@ -24,7 +24,7 @@ public class App {
 
 			case "backup":
 			try{
-				stub.backup();
+				stub.backup(file);
 				//stub.message("Backed up");
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());

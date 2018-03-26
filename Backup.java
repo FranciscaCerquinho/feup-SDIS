@@ -14,11 +14,12 @@ public class Backup implements Runnable{
 
         private File file;
         private int RepDegree;
+        private FileInformation fileInformation;
 
-    public Backup(File f, int RepDegree){
+    public Backup(File f, int RepDegree, FileInformation fileInformation){
         file=f;
         this.RepDegree=RepDegree;
-
+        this.fileInformation=fileInformation;
     }
 
  
@@ -41,6 +42,9 @@ public void run(){
                
                 String filePartName = String.format("%s.%03d", fileName, partCounter++);
                 File newChunk = new File(file.getParent(), filePartName);
+                ChunkInfo chunkInfo= new ChunkInfo(RepDegree, partCounter-1);
+                fileInformation.addChunkInfo(chunkInfo);
+
                 try (FileOutputStream out = new FileOutputStream(newChunk)) {
                     out.write(buffer, 0, bytesAmount);
                 }catch(IOException ex){

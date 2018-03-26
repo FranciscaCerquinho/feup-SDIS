@@ -47,6 +47,13 @@ public class Message{
 			return message;
 		}
 
+		public byte[] removed(Chunk chunk, String peer_id){
+
+			String message = Header.REMOVED + " " + VERSION +" " + peer_id + " " + chunk.getFileID() + " " + chunk.getChunkNo() + " "+CR+LF;
+			message.getBytes();
+			return message;
+		}
+
 
 
 

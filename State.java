@@ -1,15 +1,14 @@
 import java.net.UnknownHostException;
 
-public class State{
+public class State implements Runnable{
 
-    private static MultiCastChannel mc_channel;
     public State(){
 
-        try{
-            this.mc_channel = new MultiCastChannel("228.0.0.4", 8080);
-        }
-        catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+    }
+
+
+    @Override
+    public void run(){
+
     }
 }

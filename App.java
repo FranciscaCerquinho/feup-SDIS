@@ -1,6 +1,10 @@
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 //ligação ao servidor
 public class App {
@@ -15,8 +19,30 @@ public class App {
 		int repDegree = Integer.parseInt(args[3]);
 		RMIinterface stub;
 		ArrayList<FileInformation> fileInfo = new ArrayList<FileInformation>();
-			
+
+		String FILENAME = "information.txt";
+
 		try{
+			String line;
+			BufferedReader in;
+
+			in = new BufferedReader(new FileReader(FILENAME));
+			line = in.readLine();
+
+			while(line != null)
+			{
+				System.out.println(line);
+
+				String [] res = line.split(";");
+				String filename=res[0];
+				String fileRepDegree=res[1];
+				String filePeerId=res[2];
+
+				FileInformation newFileInfo = new FileInformation(filename,repDegree,peer_id);
+				fileInfo.add(newFileInfo);
+				line = in.readLine();
+			}
+
 			Registry registry = LocateRegistry.getRegistry(1099);
 			stub = (RMIinterface) registry.lookup(peer_id);
 
@@ -29,6 +55,7 @@ public class App {
 
 				FileInformation fileInformation = new FileInformation(file,repDegree, peer_id);
 				fileInfo.add(fileInformation);
+
 				stub.backup(file,  repDegree, fileInformation);
 				//stub.message("Backed up");
 
@@ -52,8 +79,8 @@ public class App {
 
 			case "delete":
 				try{
-				stub.reclaim();
-				stub.message("Chose " + command + " protocol");
+					stub.delete();
+					stub.message("Chose " + command + " protocol");
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());
 				e.printStackTrace();
@@ -61,8 +88,9 @@ public class App {
 
 			case "reclaim":
 				try{
-				stub.delete();
-				stub.message("Chose " + command + " protocol");
+					int maxDiskSpace = Integer.parseInt(file);
+					stub.reclaim(maxDiskSpace,fileInfo);
+					stub.message("Chose " + command + " protocol");
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());
 				e.printStackTrace();
@@ -88,10 +116,20 @@ public class App {
 
 		}
 
+
+		for(int i=0; i < fileInfo.size(); i++) {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(FILENAME));
+			String information= fileInfo.get(i).getFile() + ";" + fileInfo.get(i).getRepDegree() + ";" +fileInfo.get(i).getBackupServiceID();
+			bw.write(information);
+		}
+
+
 		}catch(Exception e){
 			System.err.println("App exception: " + e.toString());
 			e.printStackTrace();
 		}
+
+
 		
 	}
 	

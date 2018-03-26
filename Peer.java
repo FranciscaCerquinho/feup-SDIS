@@ -8,11 +8,9 @@ import java.net.UnknownHostException;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.ArrayList;
 
 import java.io.File;
-
-
-
 
 
 public class Peer implements RMIinterface {
@@ -45,7 +43,7 @@ public class Peer implements RMIinterface {
 	}
 
 
-	public void backup(String fileID, int repDegree, FileInformation fileInformation) throws RemoteException, UnknownHostException, InterruptedException{
+	public void backup(String fileID, int repDegree,FileInformation fileInformation) throws RemoteException, UnknownHostException, InterruptedException{
 		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\"+fileID),repDegree, fileInformation, this));
 
 	}
@@ -58,7 +56,8 @@ public class Peer implements RMIinterface {
 		System.out.println("Chose delete subprotocol");
 	}
 
-	public void reclaim() throws RemoteException, UnknownHostException, InterruptedException{
+	public void reclaim(int maxDiskSpace, ArrayList<FileInformation> fileInformation) throws RemoteException, UnknownHostException, InterruptedException{
+		exec.execute(new Reclaim(maxDiskSpace, fileInformation));
 		System.out.println("Chose reclaim subprotocol");
 	}
 

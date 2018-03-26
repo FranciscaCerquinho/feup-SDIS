@@ -11,7 +11,7 @@ public class App {
 		String peer_id = args[0];
 		String command = args[1];
 		String file = args[2];
-		int RepDegree = Integer.parseInt(args[3]);
+		int repDegree = Integer.parseInt(args[3]);
 		RMIinterface stub;
 			
 		try{
@@ -24,8 +24,8 @@ public class App {
 
 			case "backup":
 			try{
-				stub.backup(file);
-				//stub.message("Backed up");
+				stub.backup(file, repDegree);
+				
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());
 				e.printStackTrace();

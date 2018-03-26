@@ -14,10 +14,13 @@ public class Backup implements Runnable{
 
         private File file;
         private int RepDegree;
+        private Peer peer;
+        private Message message = new Message();
 
-    public Backup(File f, int RepDegree){
+    public Backup(File f, int RepDegree, Peer peer){
         file=f;
         this.RepDegree=RepDegree;
+        this.peer = peer;
 
     }
 

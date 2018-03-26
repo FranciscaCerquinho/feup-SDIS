@@ -1,10 +1,10 @@
-public enum MessageType{
+public enum Header{
 
 	PUTCHUNK("PUTCHUNK"), STORED("STORED"), GETCHUNK("GETCHUNK"), CHUNK("CHUNK"), DELETE("DELETE"), REMOVED("REMOVED");
 
 	private String type;
 
-	public MessageType(String messageType){
+	private Header(String messageType){
 		this.type = type;
 	}
 

@@ -1,3 +1,5 @@
+import java.net.UnknownHostException;
+
 public class State{
 
     private static MultiCastChannel mc_channel;

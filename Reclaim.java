@@ -26,12 +26,16 @@ public class Reclaim implements Runnable{
 
     @Override
     public void run(){
-/*
-        for(int i=0; i < fileInformation.length;i++){
+
+        int chunkSpace;
+
+        //ir buscar o espaço guardado em cada chunk store
+
+        for(int i=0; i < fileInformation.size();i++){
 
         }
 
-        */
+
 
     }
 }

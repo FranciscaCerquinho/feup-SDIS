@@ -12,7 +12,7 @@ public class App {
 		String peer_id = args[0];
 		String command = args[1];
 		String file = args[2];
-		int RepDegree = Integer.parseInt(args[3]);
+		int repDegree = Integer.parseInt(args[3]);
 		RMIinterface stub;
 		ArrayList<FileInformation> fileInfo = new ArrayList<FileInformation>();
 			
@@ -26,10 +26,12 @@ public class App {
 
 			case "backup":
 			try{
-				FileInformation fileInformation = new FileInformation(file,RepDegree, peer_id);
+
+				FileInformation fileInformation = new FileInformation(file,repDegree, peer_id);
 				fileInfo.add(fileInformation);
-				stub.backup(file, fileInformation);
+				stub.backup(file,  repDegree, fileInformation);
 				//stub.message("Backed up");
+
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());
 				e.printStackTrace();

@@ -51,10 +51,7 @@ public void run(){
             ex.printStackTrace();
         }
     }
-/*
-    public static void main(String[] args) throws IOException {
-        splitFile(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\estrada.jpg"));
-    }*/
+
 }
 
 

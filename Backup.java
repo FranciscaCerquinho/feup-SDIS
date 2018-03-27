@@ -54,6 +54,9 @@ public void run(){
 
                 byte[] infoToSend = message.sendPutChunk(newChunk, peer.getPeerID());
 
+                
+
+
                 ChunkInfo chunkInfo= new ChunkInfo(repDegree, partCounter);
               //  fileInformation.addChunkInfo(chunkInfo);
 

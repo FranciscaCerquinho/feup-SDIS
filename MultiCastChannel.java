@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.UnknownHostException;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 public class MultiCastChannel implements Runnable{
 
@@ -13,8 +16,13 @@ public class MultiCastChannel implements Runnable{
 	private static MulticastSocket receiverSocket;
 	private static String peer_sending;
 	private static String peer_subscribed;
+	private static ExecutorService exec;
+
 	
 	public MultiCastChannel(String address, int port ) throws UnknownHostException{
+
+			exec = Executors.newFixedThreadPool(5);
+
 
 		try {
 			this.address = InetAddress.getByName(address);
@@ -44,7 +52,7 @@ public class MultiCastChannel implements Runnable{
 			DatagramPacket msgPacket = new DatagramPacket(toSendContent ,toSendContent.length,address,port);
 			senderSocket.send(msgPacket);
 
-			System.out.println("Initiator peer sent packet with: content");
+			
 		} catch(IOException ex){
 			ex.printStackTrace();
 
@@ -71,7 +79,7 @@ public class MultiCastChannel implements Runnable{
 	public void run(){
 		
 
-		byte[] buf = new byte[256];
+		byte[] buf = new byte[64000];
 		openSocket();
 
 		try{
@@ -80,14 +88,20 @@ public class MultiCastChannel implements Runnable{
 				DatagramPacket msgReceiverPacket = new DatagramPacket(buf,buf.length);
 				receiverSocket.receive(msgReceiverPacket);
 
-				if(peer_subscribed != peer_sending){			
 
-				String answer = new String(buf, 0, buf.length);
+				if(peer_subscribed != peer_sending){	
 
-				System.out.println("Received");
 
-			//	System.out.println("Peer received msg: " + answer);
-			//	break;
+				
+				String answer = new String(msgReceiverPacket.getData());
+				System.out.println(answer);
+				
+				if(answer != null){
+				exec.execute(new MessageTreatment(answer));
+			}
+			
+
+			
 			} 
 			
 			}

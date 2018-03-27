@@ -23,7 +23,7 @@ public class Peer implements RMIinterface {
 
 			exec = Executors.newFixedThreadPool(5);
 		try{
-			this.mc_channel = new MultiCastChannel("228.0.0.4", 8080);
+			this.mc_channel = new MultiCastChannel("228.0.0.5", 8080);
 		}
 		catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -39,7 +39,7 @@ public class Peer implements RMIinterface {
 	
 	public void message(byte[] message) throws RemoteException, UnknownHostException, InterruptedException {
 		
-		System.out.println("Hello, world! I'm peer number " + this.peerID);
+		//System.out.println("Hello, world! I'm peer number " + this.peerID);
 
 		mc_channel.sendMessage(this.peerID, message);
 

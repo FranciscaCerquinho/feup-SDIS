@@ -15,7 +15,7 @@ public class Message{
 
 		public  byte[] sendPutChunk(Chunk chunk,String peer_id){
 
-			String message = Header.PUTCHUNK + " " + VERSION +" " + peer_id + " " + chunk.getFileID() +" " + chunk.getChunkNo() + " " + chunk.getChunkReplication() +" "+CR+LF;
+			String message = Header.PUTCHUNK + " " + VERSION +" " + peer_id + " " + chunk.getFileID() +" " + chunk.getChunkNo() + " " + chunk.getChunkReplication() +" "+CR+LF+" ";
 			byte[] test = Utils.concatBytes(message.getBytes(), chunk.getContent());
 			return test;
 		}

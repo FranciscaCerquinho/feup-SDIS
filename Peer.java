@@ -37,7 +37,7 @@ public class Peer implements RMIinterface {
 		return peerID;
 	}
 	
-	public void message(String message) throws UnknownHostException, InterruptedException {
+	public void message(byte[] message) throws RemoteException, UnknownHostException, InterruptedException {
 		
 		System.out.println("Hello, world! I'm peer number " + this.peerID);
 

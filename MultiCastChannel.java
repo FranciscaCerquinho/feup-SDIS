@@ -32,7 +32,7 @@ public class MultiCastChannel implements Runnable{
 	public void setSubscribe(String peer_subscribe_id){
 		peer_subscribed = peer_subscribe_id;
 	}
-	public static void sendMessage(String peer_sender, String message) throws UnknownHostException, InterruptedException{
+	public static void sendMessage(String peer_sender, byte[] toSendContent) throws UnknownHostException, InterruptedException{
 
 		peer_sending = peer_sender;
 		//open a datagramsocket to send data
@@ -41,10 +41,10 @@ public class MultiCastChannel implements Runnable{
 		try(DatagramSocket senderSocket = new DatagramSocket()){
 
 			//create a packet that will contain the data
-			DatagramPacket msgPacket = new DatagramPacket(message.getBytes(),message.getBytes().length,address,port);
+			DatagramPacket msgPacket = new DatagramPacket(toSendContent ,toSendContent.length,address,port);
 			senderSocket.send(msgPacket);
 
-			System.out.println("Initiator peer sent packet with: " + message);
+			System.out.println("Initiator peer sent packet with: content");
 		} catch(IOException ex){
 			ex.printStackTrace();
 
@@ -84,7 +84,9 @@ public class MultiCastChannel implements Runnable{
 
 				String answer = new String(buf, 0, buf.length);
 
-				System.out.println("Peer received msg: " + answer);
+				System.out.println("Received");
+
+			//	System.out.println("Peer received msg: " + answer);
 			//	break;
 			} 
 			

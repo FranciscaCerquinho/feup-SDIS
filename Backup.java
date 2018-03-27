@@ -13,16 +13,14 @@ import java.io.IOException;
 public class Backup implements Runnable{
 
         private File file;
-        private int RepDegree;
+        private int repDegree;
        // private FileInformation fileInformation;
         private Peer peer;
         private Message message = new Message();
-        private String fileIDencrypted;
 
     public Backup(File f, int RepDegree, Peer peer){
-      //  fileIDencrypted = Utils.sha256(fileInformation.getFile());
         file=f;
-        this.RepDegree=RepDegree;
+        this.repDegree=repDegree;
       //  this.fileInformation=fileInformation;
         this.peer = peer;
 
@@ -48,23 +46,25 @@ public void run(){
                
                 String filePartName = String.format("%s.%03d", fileName, partCounter++);
                 File newFile = new File(file.getParent(), filePartName);
+                String path = file.getParent().toString();
+                String fileIdToEncrypt = path + Integer.toString(partCounter);
+                String fileIDencrypted = Utils.sha256(fileIdToEncrypt);
+                Chunk newChunk =  new Chunk(fileIDencrypted, partCounter, repDegree, buffer);
+                Message message = new Message();
 
-           //     Chunk newChunk =  new Chunk(fileIDencrypted, partCounter,);
-                ChunkInfo chunkInfo= new ChunkInfo(RepDegree, partCounter);
+                byte[] infoToSend = message.sendPutChunk(newChunk, peer.getPeerID());
+
+                ChunkInfo chunkInfo= new ChunkInfo(repDegree, partCounter);
               //  fileInformation.addChunkInfo(chunkInfo);
 
-                try (FileOutputStream out = new FileOutputStream(newFile)) {
-                    out.write(buffer, 0, bytesAmount);
-                    peer.message("backing up");
-                  //  byte[] message = Message.sendPutChunk(newFile, Peer.getPeerID());
-
-                }catch(IOException ex){
-                    ex.printStackTrace();
-                }catch(InterruptedException ex){
-                    ex.printStackTrace();
-                }
+               
+                   peer.message(infoToSend);
+                  
+            
             }
         }catch(IOException ex){
+            ex.printStackTrace();
+        }catch(InterruptedException ex){
             ex.printStackTrace();
         }
     }

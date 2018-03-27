@@ -11,6 +11,6 @@ public interface RMIinterface extends Remote{
 	void delete() throws RemoteException, UnknownHostException, InterruptedException;
 	void reclaim(int maxDiskSpace) throws RemoteException, UnknownHostException, InterruptedException;
 	void state() throws RemoteException, UnknownHostException, InterruptedException;
-	void message(String message) throws RemoteException, UnknownHostException, InterruptedException;
+	void message(byte[] message) throws RemoteException, UnknownHostException, InterruptedException;
 	
 }

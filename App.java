@@ -69,7 +69,7 @@ public class App {
 			case "restore":
 			try{
 				stub.restore();
-				stub.message("Chose " + command + " protocol");
+			//	stub.message("Chose " + command + " protocol");
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());
 				e.printStackTrace();
@@ -81,7 +81,7 @@ public class App {
 			case "delete":
 				try{
 					stub.delete();
-					stub.message("Chose " + command + " protocol");
+				//	stub.message("Chose " + command + " protocol");
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());
 				e.printStackTrace();

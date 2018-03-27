@@ -1,4 +1,6 @@
 import java.net.DatagramPacket;
+import java.io.File;
+
 
 
 
@@ -11,10 +13,10 @@ public class Message{
 
 	public Message(){}
 
-		public byte[] sendPutChunk(Chunk chunk,String peer_id){
+		public  byte[] sendPutChunk(Chunk chunk,String peer_id){
 
 			String message = Header.PUTCHUNK + " " + VERSION +" " + peer_id + " " + chunk.getFileID() +" " + chunk.getChunkNo() + " " + chunk.getChunkReplication() +" "+CR+LF;
-			byte[] test = message.getBytes();
+			byte[] test = Utils.concatBytes(message.getBytes(), chunk.getContent());
 			return test;
 		}
 
@@ -35,7 +37,7 @@ public class Message{
 		public byte[] chunked(Chunk chunk, String peer_id){
 
 			String message = Header.CHUNK + " " + VERSION +" " + peer_id + " " + chunk.getChunkNo() +" "+CR+LF;
-			byte[] test = message.getBytes();
+			byte[] test = Utils.concatBytes(message.getBytes(), chunk.getContent());
 			return test;
 
 		}

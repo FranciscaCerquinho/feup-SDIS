@@ -15,7 +15,8 @@ public class App {
 		String file = args[2];
 		int repDegree = Integer.parseInt(args[3]);
 		RMIinterface stub;
-		ArrayList<FileInformation> fileInfo = new ArrayList<FileInformation>();
+ 	/*	ArrayList<FileInformation> fileInfo = new ArrayList<FileInformation>();
+
 
 		String FILENAME = "information.txt";
 
@@ -39,7 +40,8 @@ public class App {
 				fileInfo.add(newFileInfo);
 				line = in.readLine();
 			}
-
+*/		
+			try{
 			Registry registry = LocateRegistry.getRegistry(1099);
 			stub = (RMIinterface) registry.lookup(peer_id);
 
@@ -50,10 +52,12 @@ public class App {
 			case "backup":
 			try{
 
-				FileInformation fileInformation = new FileInformation(file,repDegree, peer_id);
-				fileInfo.add(fileInformation);
+				//FileInformation fileInformation = new FileInformation(file,repDegree, peer_id);
+			//	fileInfo.add(fileInformation);
 
-				stub.backup(file,  repDegree, fileInformation);
+				//acrescentar fileinformation
+
+				stub.backup(file,  repDegree);
 				//stub.message("Backed up");
 
 			}catch(Exception e){
@@ -84,24 +88,24 @@ public class App {
 		}				break;
 
 			case "reclaim":
-				try{
+			/*	try{
 					int maxDiskSpace = Integer.parseInt(file);
 					stub.reclaim(maxDiskSpace,fileInfo);
 					stub.message("Chose " + command + " protocol");
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());
 				e.printStackTrace();
-			}			
+			}	*/		
 			break;
 
 			case "state":
-				try{
+			/*	try{
 				stub.state();
 				stub.message("Chose " + command + " protocol");
 			}catch(Exception e){
 				System.err.println("App exception: " + e.toString());
 				e.printStackTrace();
-		}				break;
+		}	*/			break;
 
 				default:
 
@@ -114,11 +118,11 @@ public class App {
 		}
 
 
-		for(int i=0; i < fileInfo.size(); i++) {
+	/*	for(int i=0; i < fileInfo.size(); i++) {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(FILENAME));
 			String information= fileInfo.get(i).getFile() + ";" + fileInfo.get(i).getRepDegree() + ";" +fileInfo.get(i).getBackupServiceID();
 			bw.write(information);
-		}
+		}*/
 
 
 		}catch(Exception e){

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Reclaim implements Runnable{
-
+/*
     private int maxDiskSpace;
     private int diskSpace;
     private ArrayList<FileInformation> fileInformation;
@@ -22,18 +22,18 @@ public class Reclaim implements Runnable{
 
     public void updateDiskSpace(int space){
         diskSpace+=space;
-    }
+    }*/
 
     @Override
     public void run(){
 
-        int chunkSpace;
+      //  int chunkSpace;
 
         //ir buscar o espaço guardado em cada chunk store
 
-        for(int i=0; i < fileInformation.size();i++){
+        //for(int i=0; i < fileInformation.size();i++){
 
-        }
+        //}
 
 
 

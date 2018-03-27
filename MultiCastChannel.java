@@ -85,7 +85,7 @@ public class MultiCastChannel implements Runnable{
 				String answer = new String(buf, 0, buf.length);
 
 				System.out.println("Peer received msg: " + answer);
-				break;
+			//	break;
 			} 
 			
 			}

@@ -31,6 +31,11 @@ public class Peer implements RMIinterface {
 
 
 	}
+
+
+	public static String getPeerID(){
+		return peerID;
+	}
 	
 	public void message(String message) throws UnknownHostException, InterruptedException {
 		
@@ -43,8 +48,8 @@ public class Peer implements RMIinterface {
 	}
 
 
-	public void backup(String fileID, int repDegree,FileInformation fileInformation) throws RemoteException, UnknownHostException, InterruptedException{
-		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\"+fileID),repDegree, fileInformation, this));
+	public void backup(String fileID, int repDegree) throws RemoteException, UnknownHostException, InterruptedException{
+		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\"+fileID), repDegree, this));
 
 	}
 
@@ -56,8 +61,8 @@ public class Peer implements RMIinterface {
 		System.out.println("Chose delete subprotocol");
 	}
 
-	public void reclaim(int maxDiskSpace, ArrayList<FileInformation> fileInformation) throws RemoteException, UnknownHostException, InterruptedException{
-		exec.execute(new Reclaim(maxDiskSpace, fileInformation));
+	public void reclaim(int maxDiskSpace) throws RemoteException, UnknownHostException, InterruptedException{
+		//exec.execute(new Reclaim(maxDiskSpace, fileInformation));
 		System.out.println("Chose reclaim subprotocol");
 	}
 

@@ -14,14 +14,16 @@ public class Backup implements Runnable{
 
         private File file;
         private int RepDegree;
-        private FileInformation fileInformation;
+       // private FileInformation fileInformation;
         private Peer peer;
         private Message message = new Message();
+        private String fileIDencrypted;
 
-    public Backup(File f, int RepDegree, FileInformation fileInformation, Peer peer){
+    public Backup(File f, int RepDegree, Peer peer){
+      //  fileIDencrypted = Utils.sha256(fileInformation.getFile());
         file=f;
         this.RepDegree=RepDegree;
-        this.fileInformation=fileInformation;
+      //  this.fileInformation=fileInformation;
         this.peer = peer;
 
     }
@@ -45,13 +47,20 @@ public void run(){
             while ((bytesAmount = bis.read(buffer)) > 0) {
                
                 String filePartName = String.format("%s.%03d", fileName, partCounter++);
-                File newChunk = new File(file.getParent(), filePartName);
-                ChunkInfo chunkInfo= new ChunkInfo(RepDegree, partCounter-1);
-                fileInformation.addChunkInfo(chunkInfo);
+                File newFile = new File(file.getParent(), filePartName);
 
-                try (FileOutputStream out = new FileOutputStream(newChunk)) {
+           //     Chunk newChunk =  new Chunk(fileIDencrypted, partCounter,);
+                ChunkInfo chunkInfo= new ChunkInfo(RepDegree, partCounter);
+              //  fileInformation.addChunkInfo(chunkInfo);
+
+                try (FileOutputStream out = new FileOutputStream(newFile)) {
                     out.write(buffer, 0, bytesAmount);
+                    peer.message("backing up");
+                  //  byte[] message = Message.sendPutChunk(newFile, Peer.getPeerID());
+
                 }catch(IOException ex){
+                    ex.printStackTrace();
+                }catch(InterruptedException ex){
                     ex.printStackTrace();
                 }
             }

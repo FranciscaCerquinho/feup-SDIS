@@ -21,7 +21,7 @@ public class Peer implements RMIinterface {
 
 	private Peer() throws UnknownHostException{
 
-			exec = Executors.newFixedThreadPool(5);
+			exec = Executors.newFixedThreadPool(100);
 		try{
 			this.mc_channel = new MultiCastChannel("228.0.0.5", 8080);
 		}

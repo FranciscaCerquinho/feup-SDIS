@@ -47,7 +47,7 @@ public void run(){
                 String filePartName = String.format("%s.%03d", fileName, partCounter++);
                 File newFile = new File(file.getParent(), filePartName);
                 String path = file.getParent().toString();
-                String fileIdToEncrypt = path + Integer.toString(partCounter);
+                String fileIdToEncrypt = path;
                 String fileIDencrypted = Utils.sha256(fileIdToEncrypt);
                 Chunk newChunk =  new Chunk(fileIDencrypted, partCounter, repDegree, buffer);
                 Message message = new Message();

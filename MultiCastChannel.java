@@ -4,10 +4,14 @@ import java.net.MulticastSocket;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.UnknownHostException;
+import java.util.*;
+import java.io.*;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
+
+
+import java.util.Random;
+import java.util.concurrent.*;
 
 public class MultiCastChannel implements Runnable{
 
@@ -16,12 +20,12 @@ public class MultiCastChannel implements Runnable{
 	private static MulticastSocket receiverSocket;
 	private static String peer_sending;
 	private static String peer_subscribed;
-	private static ExecutorService exec;
+	private static ScheduledThreadPoolExecutor exec;
 
 	
 	public MultiCastChannel(String address, int port ) throws UnknownHostException{
 
-			exec = Executors.newFixedThreadPool(5);
+			exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(5);
 
 
 		try {
@@ -93,12 +97,14 @@ public class MultiCastChannel implements Runnable{
 
 
 				
-				String answer = new String(msgReceiverPacket.getData());
-				System.out.println(answer);
+				//String answer = new String(msgReceiverPacket.getData());
+			
 				
-				if(answer != null){
-				exec.execute(new MessageTreatment(answer));
-			}
+				//if(answer != null){
+					byte[] toSend = Arrays.copyOfRange(buf, 0, buf.length-1);
+				int rand = new Random().nextInt(400);	
+				exec.schedule(new MessageTreatment(toSend),rand,TimeUnit.MILLISECONDS);
+			//}
 			
 
 			

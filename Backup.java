@@ -9,9 +9,17 @@ import java.security.MessageDigest;
 import java.util.List;
 import java.io.IOException;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import java.util.Random;
+import java.util.concurrent.*;
+
 
 public class Backup implements Runnable{
 
+
+        private static ScheduledThreadPoolExecutor exec;
         private File file;
         private int repDegree;
        // private FileInformation fileInformation;
@@ -19,6 +27,7 @@ public class Backup implements Runnable{
         private Message message = new Message();
 
     public Backup(File f, int RepDegree, Peer peer){
+       exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(50);
         file=f;
         this.repDegree=repDegree;
       //  this.fileInformation=fileInformation;
@@ -26,11 +35,14 @@ public class Backup implements Runnable{
 
     }
 
+    public static ScheduledThreadPoolExecutor getExecs(){
+        return exec;
+    }
  
 
 @Override
 public void run(){
-        int partCounter = 1;
+        int partCounter = 0;
 
        
         byte[] buffer = new byte[64000];
@@ -60,16 +72,19 @@ public void run(){
                 ChunkInfo chunkInfo= new ChunkInfo(repDegree, partCounter);
               //  fileInformation.addChunkInfo(chunkInfo);
 
-               
-                   peer.message(infoToSend);
+
+                    int rand = new Random().nextInt(400);   
+                exec.schedule(new SendMessageToChannel("mdb",infoToSend),rand,TimeUnit.MILLISECONDS);
+                   // exec.execute(new SendMessageToChannel("mdb",infoToSend,peer));
+                //   peer.message(infoToSend);
                   
             
             }
         }catch(IOException ex){
             ex.printStackTrace();
-        }catch(InterruptedException ex){
+        }/*catch(InterruptedException ex){
             ex.printStackTrace();
-        }
+        }*/
     }
 
 }

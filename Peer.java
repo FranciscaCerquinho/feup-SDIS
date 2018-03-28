@@ -17,6 +17,8 @@ public class Peer implements RMIinterface {
 	
 	private static String peerID;
 	private static MultiCastChannel mc_channel;
+	private static MDBchannel mdbchannel;
+	private static MDRchannel mdrchannel;
 	private static ExecutorService exec;
 
 	private Peer() throws UnknownHostException{
@@ -24,6 +26,10 @@ public class Peer implements RMIinterface {
 			exec = Executors.newFixedThreadPool(100);
 		try{
 			this.mc_channel = new MultiCastChannel("228.0.0.5", 8080);
+			this.mdrchannel = new MDRchannel("228.0.0.6",8081);
+			this.mdbchannel = new MDBchannel("228.0.0.7", 8082);
+
+			
 		}
 		catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -32,19 +38,46 @@ public class Peer implements RMIinterface {
 
 	}
 
+	public static MDBchannel getMDBchannel(){
+		return mdbchannel;
+	}
+
+	public static MultiCastChannel getMCchannel(){
+		return mc_channel;
+	}
+
+	public static MDRchannel getMDRchannel(){
+		return mdrchannel;
+	}
 
 	public static String getPeerID(){
 		return peerID;
 	}
 	
-	public void message(byte[] message) throws RemoteException, UnknownHostException, InterruptedException {
+	public static void messageMDB(byte[] message) throws RemoteException, UnknownHostException, InterruptedException {
 		
-		//System.out.println("Hello, world! I'm peer number " + this.peerID);
 
-		mc_channel.sendMessage(this.peerID, message);
+		mdbchannel.sendMessage(peerID, message);
 
-					
+				
+	}
+
+
+	public static void messageMDR(byte[] message) throws RemoteException, UnknownHostException, InterruptedException {
 		
+	
+		mdrchannel.sendMessage(peerID, message);
+
+				
+	}
+
+
+	public static void messageMC(byte[] message) throws RemoteException, UnknownHostException, InterruptedException {
+		
+
+		mc_channel.sendMessage(peerID, message);
+
+				
 	}
 
 
@@ -52,6 +85,8 @@ public class Peer implements RMIinterface {
 		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\"+fileID), repDegree, this));
 
 	}
+
+
 
 	public void restore() throws RemoteException, UnknownHostException, InterruptedException{
 		System.out.println("Chose restore subprotocol");
@@ -100,6 +135,8 @@ public class Peer implements RMIinterface {
 		
 		
 		exec.execute(mc_channel);
+		exec.execute(mdbchannel);
+		exec.execute(mdrchannel);
 		
 
 		

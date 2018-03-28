@@ -13,7 +13,7 @@ import java.io.*;
 import java.util.Random;
 import java.util.concurrent.*;
 
-public class MultiCastChannel implements Runnable{
+public class MDRchannel implements Runnable{
 
 	private static InetAddress address;
 	private static int port;
@@ -21,10 +21,9 @@ public class MultiCastChannel implements Runnable{
 	private static String peer_sending;
 	private static String peer_subscribed;
 	private static ScheduledThreadPoolExecutor exec;
-
-
 	
-	public MultiCastChannel(String address, int port) throws UnknownHostException{
+	
+	public MDRchannel(String address, int port) throws UnknownHostException{
 
 			exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(5);
 			

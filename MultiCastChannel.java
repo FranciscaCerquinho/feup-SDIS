@@ -94,7 +94,7 @@ public class MultiCastChannel implements Runnable{
 				receiverSocket.receive(msgReceiverPacket);
 
 
-				if(peer_subscribed != peer_sending){	
+				
 
 
 				
@@ -108,8 +108,8 @@ public class MultiCastChannel implements Runnable{
 			//}
 			
 
+		
 			
-			} 
 			
 			}
 

@@ -19,9 +19,9 @@ public class Message{
 			return test;
 		}
 
-		public byte[] sendStored(Chunk chunk, String peer_id){
+		public byte[] sendStored(String fileID, String chunkNo, String peer_id){
 
-			String message = Header.STORED + " " + VERSION +" " + peer_id + " " +chunk.getFileID() + " " + chunk.getChunkNo() + " "+"\r\n\r\n";
+			String message = Header.STORED + " " + VERSION +" " + peer_id + " " + fileID + " " + chunkNo + " "+"\r\n\r\n";
 			byte[] test = message.getBytes();
 			return test;
 		}

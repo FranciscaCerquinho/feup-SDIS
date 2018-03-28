@@ -64,10 +64,10 @@ public class MessageTreatment implements Runnable{
   					int rand = new Random().nextInt(400);   
                	
                	 Message message = new Message();
-               //	 byte[] response = message.sendStored()
-
-
-              // 	 exec.schedule(new SendMessageToChannel("mc",("hi").getBytes()),rand,TimeUnit.MILLISECONDS);
+               	 byte[] response = message.sendStored(splitAnswer[3], splitAnswer[4], Peer.getPeerID());
+               	
+               
+               exec.schedule(new SendMessageToChannel("mc",response),rand,TimeUnit.MILLISECONDS);
   				
 
       		break;

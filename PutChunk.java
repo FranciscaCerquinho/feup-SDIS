@@ -7,7 +7,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+import java.util.ArrayList;
 
 
 
@@ -27,10 +27,23 @@ public class PutChunk implements Runnable{
 
 	@Override
 	public void run(){
-
-		
+		FileStore fileStore;
+			boolean exists = false;
       			this.partCounter += 1;
-				
+      			int a = 0;
+      			for(; a < Peer.getStoredFile().size(); a++){
+      				 if(splitAnswer[3].equals(Peer.getStoredFile().get(a).getFileID())){
+      				 	exists = true;
+      				 	break;
+      				 }
+      				}
+      			if(!exists){
+					fileStore = new FileStore(splitAnswer[3]);
+					Peer.addStoredFile(fileStore);
+      			}else{
+      				fileStore = Peer.getStoredFile().get(a);
+      			}
+      			
 				try{
 
 				FileOutputStream fos = new FileOutputStream(new File("C:\\Users\\Ventura\\Desktop\\backup", splitAnswer[3]+splitAnswer[4]));
@@ -48,7 +61,11 @@ public class PutChunk implements Runnable{
 
 
   				  if(!(Peer.getPeerID().equals(splitAnswer[2]))){
-  				  	Peer.addStoredChunk(toStore);
+  				  
+  				  	fileStore.addChunks(toStore);
+
+  				  	System.out.println("Files stored: " + Peer.getStoredFile().size());
+  				  	System.out.println("chunks per file: " + Peer.getStoredFile().get(0).getChunks().size());
   				  
   				  }
   				

@@ -20,7 +20,7 @@ public class Peer implements RMIinterface {
 	private static MDBchannel mdbchannel;
 	private static MDRchannel mdrchannel;
 	private static ExecutorService exec;
-	private static ArrayList<Chunk> chunksStored = new ArrayList<Chunk>();
+	private static ArrayList<FileStore> filesStored = new ArrayList<FileStore>();
 
 	private Peer() throws UnknownHostException{
 
@@ -43,12 +43,12 @@ public class Peer implements RMIinterface {
 		return mdbchannel;
 	}
 
-	public static ArrayList<Chunk> getStoredChunks(){
-		return chunksStored;
+	public static ArrayList<FileStore> getStoredFile(){
+		return filesStored;
 	}
 
-	public static void addStoredChunk(Chunk chunk){
-		chunksStored.add(chunk);
+	public static void addStoredFile(FileStore file){
+		filesStored.add(file);
 	}
 
 	public static MultiCastChannel getMCchannel(){

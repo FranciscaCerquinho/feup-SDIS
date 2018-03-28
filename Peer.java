@@ -20,6 +20,7 @@ public class Peer implements RMIinterface {
 	private static MDBchannel mdbchannel;
 	private static MDRchannel mdrchannel;
 	private static ExecutorService exec;
+	private static ArrayList<Chunk> chunksStored = new ArrayList<Chunk>();
 
 	private Peer() throws UnknownHostException{
 
@@ -42,6 +43,14 @@ public class Peer implements RMIinterface {
 		return mdbchannel;
 	}
 
+	public static ArrayList<Chunk> getStoredChunks(){
+		return chunksStored;
+	}
+
+	public static void addStoredChunk(Chunk chunk){
+		chunksStored.add(chunk);
+	}
+
 	public static MultiCastChannel getMCchannel(){
 		return mc_channel;
 	}
@@ -57,7 +66,7 @@ public class Peer implements RMIinterface {
 	public static void messageMDB(byte[] message) throws RemoteException, UnknownHostException, InterruptedException {
 		
 
-		mdbchannel.sendMessage(peerID, message);
+		mdbchannel.sendMessage(message);
 
 				
 	}
@@ -66,7 +75,7 @@ public class Peer implements RMIinterface {
 	public static void messageMDR(byte[] message) throws RemoteException, UnknownHostException, InterruptedException {
 		
 	
-		mdrchannel.sendMessage(peerID, message);
+		mdrchannel.sendMessage(message);
 
 				
 	}
@@ -75,14 +84,14 @@ public class Peer implements RMIinterface {
 	public static void messageMC(byte[] message) throws RemoteException, UnknownHostException, InterruptedException {
 		
 
-		mc_channel.sendMessage(peerID, message);
+		mc_channel.sendMessage(message);
 
 				
 	}
 
 
 	public void backup(String fileID, int repDegree) throws RemoteException, UnknownHostException, InterruptedException{
-		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\"+fileID), repDegree, this));
+		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\"+fileID), repDegree));
 
 	}
 
@@ -113,13 +122,13 @@ public class Peer implements RMIinterface {
         System.setProperty("java.net.preferIPv4Stack", "true");
 
 
-
+        System.out.println(peerID);
 		
 		try{
 
 			
 			Peer obj = new Peer();
-			obj.mc_channel.setSubscribe(peerID);
+			
 			RMIinterface stub = (RMIinterface) UnicastRemoteObject.exportObject(obj, 0);
 			
 			

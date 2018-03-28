@@ -23,15 +23,13 @@ public class Backup implements Runnable{
         private File file;
         private int repDegree;
        // private FileInformation fileInformation;
-        private Peer peer;
         private Message message = new Message();
 
-    public Backup(File f, int RepDegree, Peer peer){
+    public Backup(File f, int RepDegree){
        exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(50);
         file=f;
         this.repDegree=repDegree;
       //  this.fileInformation=fileInformation;
-        this.peer = peer;
 
     }
 
@@ -44,7 +42,7 @@ public class Backup implements Runnable{
 public void run(){
         int partCounter = 0;
 
-       
+       int putChunkCounter = 0;
         byte[] buffer = new byte[64000];
 
         String fileName = file.getName();
@@ -64,7 +62,11 @@ public void run(){
                 Chunk newChunk =  new Chunk(fileIDencrypted, partCounter, repDegree, buffer);
                 Message message = new Message();
 
-                byte[] infoToSend = message.sendPutChunk(newChunk, peer.getPeerID());
+                System.out.println("testiiing " + Peer.getPeerID());
+
+                byte[] infoToSend = message.sendPutChunk(newChunk, Peer.getPeerID());
+
+                
 
                 
 
@@ -74,9 +76,9 @@ public void run(){
 
 
                     int rand = new Random().nextInt(400);   
+
                 exec.schedule(new SendMessageToChannel("mdb",infoToSend),rand,TimeUnit.MILLISECONDS);
-                   // exec.execute(new SendMessageToChannel("mdb",infoToSend,peer));
-                //   peer.message(infoToSend);
+                   
                   
             
             }

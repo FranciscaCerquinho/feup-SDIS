@@ -8,7 +8,8 @@ public class FileInformation{
     private int RepDegree;
     private String backupServiceID;
     private ArrayList<ChunkInfo> chunksInfo = new ArrayList<ChunkInfo>();
-
+    private ArrayList<ChunkStore> chunkStore = new ArrayList<ChunkStore>();
+    
     public FileInformation(String f, int RepDegree, String backupServiceID) {
         this.file = f;
         this.RepDegree = RepDegree;
@@ -28,5 +29,9 @@ public class FileInformation{
 
     public void addChunkInfo(ChunkInfo newChunk){
         chunksInfo.add(newChunk);
+    }
+
+     public void addChunkStore(ChunkStore newChunk){
+        chunkStore.add(newChunk);
     }
 }

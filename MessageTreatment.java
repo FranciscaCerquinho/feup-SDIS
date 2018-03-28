@@ -14,9 +14,10 @@ public class MessageTreatment implements Runnable{
 	private byte[] messageToBeTreated;
 
 
-	private int partCounter = 0;
+	
 
 	public MessageTreatment(byte[] messageToBeTreated){
+        exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(100);
 
 		this.messageToBeTreated = messageToBeTreated;
 		
@@ -40,40 +41,30 @@ public class MessageTreatment implements Runnable{
        
       	String answer = new String(header, 0, header.length);
       	String[] splitAnswer = answer.split(" ");
-      	System.out.println(answer);
+      
       	String typeOfMessage = splitAnswer[0];
 
+      	
 
       	switch(typeOfMessage){
 
       		case "PUTCHUNK":
-      			byte[] body = Arrays.copyOfRange(this.messageToBeTreated, i+4, this.messageToBeTreated.length);
-      			this.partCounter += 1;
-				
-				try{
+          System.out.println(answer);
+          byte[] body = Arrays.copyOfRange(this.messageToBeTreated, i+4, this.messageToBeTreated.length);
+           int rand = new Random().nextInt(400);
+          
+            exec.schedule(new PutChunk(body, splitAnswer),rand,TimeUnit.MILLISECONDS);
 
-				FileOutputStream fos = new FileOutputStream(new File("C:\\Users\\Ventura\\Desktop\\backup",splitAnswer[3]+splitAnswer[4]));
-				  	fos.write(body);
-  					fos.close();
-
-  				}catch(Exception ex){
-  					ex.printStackTrace();
-  				}
-  				
-  					ScheduledThreadPoolExecutor exec  = Backup.getExecs();
-  					int rand = new Random().nextInt(400);   
-               	
-               	 Message message = new Message();
-               	 byte[] response = message.sendStored(splitAnswer[3], splitAnswer[4], Peer.getPeerID());
-               	
-               
-               exec.schedule(new SendMessageToChannel("mc",response),rand,TimeUnit.MILLISECONDS);
+      		
   				
 
       		break;
 
-      		case "hi":
-      		System.out.println("hi");
+      		case "STORED":
+      		
+
+            System.out.println(answer);
+
       		break;
 
 

@@ -10,22 +10,21 @@ import java.io.*;
 
 
 
-import java.util.Random;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MDRchannel implements Runnable{
 
 	private static InetAddress address;
 	private static int port;
 	private static MulticastSocket receiverSocket;
-	private static String peer_sending;
-	private static String peer_subscribed;
-	private static ScheduledThreadPoolExecutor exec;
+
+	private static ExecutorService exec;
 	
 	
 	public MDRchannel(String address, int port) throws UnknownHostException{
 
-			exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(5);
+			exec = Executors.newFixedThreadPool(100);
 			
 
 		try {
@@ -41,12 +40,10 @@ public class MDRchannel implements Runnable{
 
 
 
-	public void setSubscribe(String peer_subscribe_id){
-		peer_subscribed = peer_subscribe_id;
-	}
-	public static void sendMessage(String peer_sender, byte[] toSendContent) throws UnknownHostException, InterruptedException{
+	
+	public static void sendMessage(byte[] toSendContent) throws UnknownHostException, InterruptedException{
 
-		peer_sending = peer_sender;
+	
 		//open a datagramsocket to send data
 			
       
@@ -93,7 +90,7 @@ public class MDRchannel implements Runnable{
 				receiverSocket.receive(msgReceiverPacket);
 
 
-				if(peer_subscribed != peer_sending){	
+				
 
 
 				
@@ -102,13 +99,13 @@ public class MDRchannel implements Runnable{
 				
 				//if(answer != null){
 					byte[] toSend = Arrays.copyOfRange(buf, 0, buf.length-1);
-				int rand = new Random().nextInt(400);	
-				exec.schedule(new MessageTreatment(toSend),rand,TimeUnit.MILLISECONDS);
+				
+				exec.execute(new MessageTreatment(toSend));
 			//}
 			
 
 			
-			} 
+		
 			
 			}
 

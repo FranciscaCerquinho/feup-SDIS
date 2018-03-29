@@ -12,10 +12,12 @@ public class FileStore{
 
 	private static String fileID;
 	private ArrayList<Chunk> chunks = new ArrayList<>();
+	private int repDegree;
 
-	public FileStore(String fileID){
+	public FileStore(String fileID, int repDegree){
 
 		this.fileID = fileID;
+		this.repDegree = repDegree;
 
 
 	}

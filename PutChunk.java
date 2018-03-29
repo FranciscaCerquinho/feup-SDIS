@@ -38,7 +38,7 @@ public class PutChunk implements Runnable{
       				 }
       				}
       			if(!exists){
-					fileStore = new FileStore(splitAnswer[3]);
+					fileStore = new FileStore(splitAnswer[3], Integer.parseInt(splitAnswer[5]));
 					Peer.addStoredFile(fileStore);
       			}else{
       				fileStore = Peer.getStoredFile().get(a);

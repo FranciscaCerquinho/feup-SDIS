@@ -16,6 +16,7 @@ import java.io.File;
 public class Peer implements RMIinterface {
 	
 	private static String peerID;
+	private int storedCounter=0;
 	private static MultiCastChannel mc_channel;
 	private static MDBchannel mdbchannel;
 	private static MDRchannel mdrchannel;
@@ -37,6 +38,12 @@ public class Peer implements RMIinterface {
 		}
 
 
+	}
+
+
+
+	public void incrementcounter(){
+		storedCounter = storedCounter+1;
 	}
 
 	public static MDBchannel getMDBchannel(){

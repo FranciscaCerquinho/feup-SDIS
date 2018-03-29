@@ -39,20 +39,20 @@ public class Delete implements Runnable {
         ArrayList<Chunk> chunks = new ArrayList<>();
 
 
-            for (Integer i = 0; i < Peer.getStoredFile().size(); i++) {
+            for (int i = 0; i < Peer.getStoredFile().size(); i++) {
 
                 if(fileIDencrypted.equals(Peer.getStoredFile().get(i).getFileID())) {
                     System.out.println("entrei");
-                    for (Integer j = 0; j < Peer.getStoredFile().get(i).getChunks().size(); j++) {
+                    chunks = Peer.getStoredFile().get(i).getChunks();
+                    for (Integer j = 0; j < chunks.size(); j++) {
 
-                        byte[] infoToSend = message.deleted(Peer.getStoredFile().get(i).getChunks().get(j), Peer.getPeerID());
+                        byte[] infoToSend = message.deleted(chunks.get(j), Peer.getPeerID());
                         int rand = new Random().nextInt(400);
 
                         exec.schedule(new SendMessageToChannel("mc", infoToSend), rand, TimeUnit.MILLISECONDS);
                     }
-                    Peer.deleteStoredFile(i);
-                    chunks = Peer.getStoredFile().get(i).getChunks();
 
+                    Peer.deleteStoredFile(i);
 
                     File index= new File(path);
                     String[] entries = index.list();

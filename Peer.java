@@ -58,7 +58,7 @@ public class Peer implements RMIinterface {
 		filesStored.add(file);
 	}
 
-	public static void deleteStoredFile(Integer index){
+	public static void deleteStoredFile(int index){
 		filesStored.remove(index);
 	}
 

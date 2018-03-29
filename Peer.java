@@ -58,6 +58,10 @@ public class Peer implements RMIinterface {
 		filesStored.add(file);
 	}
 
+	public static void deleteStoredFile(Integer index){
+		filesStored.remove(index);
+	}
+
 	public static MultiCastChannel getMCchannel(){
 		return mc_channel;
 	}
@@ -98,18 +102,15 @@ public class Peer implements RMIinterface {
 
 
 	public void backup(String fileID, int repDegree) throws RemoteException, UnknownHostException, InterruptedException{
-		exec.execute(new Backup(new File("C:\\Users\\Ventura\\Desktop\\exemplo\\"+fileID), repDegree));
-
+		exec.execute(new Backup(new File("/Users/francisca/Desktop/"+fileID), repDegree));
 	}
-
-
 
 	public void restore() throws RemoteException, UnknownHostException, InterruptedException{
 		System.out.println("Chose restore subprotocol");
 	}
 
-	public void delete() throws RemoteException, UnknownHostException, InterruptedException{
-		System.out.println("Chose delete subprotocol");
+	public void delete(String fileID) throws RemoteException, UnknownHostException, InterruptedException{
+		exec.execute(new Delete(new File("/Users/francisca/Desktop/"+fileID)));
 	}
 
 	public void reclaim(int maxDiskSpace) throws RemoteException, UnknownHostException, InterruptedException{

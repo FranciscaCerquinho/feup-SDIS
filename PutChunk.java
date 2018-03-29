@@ -46,7 +46,7 @@ public class PutChunk implements Runnable{
       			
 				try{
 
-				FileOutputStream fos = new FileOutputStream(new File("C:\\Users\\Ventura\\Desktop\\backup", splitAnswer[3]+splitAnswer[4]));
+				FileOutputStream fos = new FileOutputStream(new File("/Users/francisca/Desktop/", splitAnswer[3]+splitAnswer[4]));
 				  	fos.write(body);
   					fos.close();
 

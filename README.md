@@ -45,7 +45,7 @@ $ java App <RMI obj. name> reclaim <amount of space>
 $ java App <RMI obj. name> state
 ```
 Example:
-Your App is supposed to trigger the backup of file test1.pdf with a replication degree of 3. Likewise, by invoking:
+Your App is supposed to trigger the backup of file test1.pdf with a replication degree of 3.  By invoking:
 
 ```
 $ java App 1 backup test1.pdf 3

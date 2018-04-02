@@ -33,10 +33,14 @@ Where <PeerID> is a number that corresponds to the id of a peer.
   
 To start the App, use the following command as an example:
 ```
-$ java App 1 backup <file> 3
+$ java App 1 backup <file> <reprlicationDegree>
 ```
-Where <file> is the file that you want to backup
-  
+
+Your App is supposed to trigger the backup of file test1.pdf with a replication degree of 3. Likewise, by invoking:
+```
+$ java App 1 backup test1.pdf 3
+```
+
 ### Members ###
 
 * Francisca Leão Cerquinho R. Fonseca, up201505791@fe.up.pt

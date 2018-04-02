@@ -29,7 +29,7 @@ To start a peer, use the following command as an example:
 ```
 $ java Peer <PeerID>
 ```
-Where ´<PeerID> is a number that corresponds to the id of a peer.
+Where `<PeerID>` is a number that corresponds to the id of a peer.
   
 To start the App, use the following command as an example:
 ```

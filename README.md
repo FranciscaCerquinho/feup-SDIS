@@ -30,9 +30,9 @@ $ rmiregistry &
 To start a peer, use the following command as an example:
 
 ```
-$ java Peer <PeerID>
+$ java Peer  <version>  <PeerID> <IP_Port_MC> <IP_Port_MDB> <IP_Port_MDR>
 ```
-Where `<PeerID>` is a number that corresponds to the id of a peer.
+Where `<version>` is the program version, `<PeerID>` is a number that corresponds to the id of a peer, `<IP_Port_MC>`is the ip port of MC multicast channel, `<IP_Port_MDB>`is the ip port of MDB multicast channel and `<IP_Port_MDR>`is the ip port of MDR multicast channel.
 
 ### To start the App
 

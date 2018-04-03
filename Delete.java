@@ -1,3 +1,4 @@
+
 import java.net.UnknownHostException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,60 +15,66 @@ import java.util.concurrent.Executors;
 
 import java.util.Random;
 import java.util.concurrent.*;
-import java.util.ArrayList;
-
-public class Delete implements Runnable {
 
 
-    private static ScheduledThreadPoolExecutor exec;
+public class Delete implements Runnable{
+
     private File file;
-    private Message message = new Message();
+    private static ExecutorService exec;
 
-    public Delete(File f) {
-        exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(50);
-        file = f;
+    public Delete(File file){
+
+
+       exec = Executors.newFixedThreadPool(100);
+
+        this.file = file;
+
+
     }
+
+
 
 
     @Override
-    public void run() {
+    public void run(){
 
-        String fileName = file.getName();
         String path = file.getParent().toString();
-        String fileIdToEncrypt = path;
+
+        String fileIdToEncrypt = path+file.lastModified();
+        
         String fileIDencrypted = Utils.sha256(fileIdToEncrypt);
-        ArrayList<Chunk> chunks = new ArrayList<>();
+            Message message = new Message();
+            byte[] infoToSend = message.deleted(fileIDencrypted, Peer.getPeerID());
+
+            
+
+        exec.execute(new SendMessageToChannel("mc",infoToSend));
 
 
-            for (int i = 0; i < Peer.getStoredFile().size(); i++) {
-
-                if(fileIDencrypted.equals(Peer.getStoredFile().get(i).getFileID())) {
-                    System.out.println("entrei");
-                    chunks = Peer.getStoredFile().get(i).getChunks();
-                    for (Integer j = 0; j < chunks.size(); j++) {
-
-                        byte[] infoToSend = message.deleted(chunks.get(j), Peer.getPeerID());
-                        int rand = new Random().nextInt(400);
-
-                        exec.schedule(new SendMessageToChannel("mc", infoToSend), rand, TimeUnit.MILLISECONDS);
-                    }
-
-                    Peer.deleteStoredFile(i);
-
-                    File index= new File(path);
-                    String[] entries = index.list();
-                    
-                    System.out.println("entries" + entries);
-                    for (String s : entries) {
-                        File currentFile = new File(index.getPath(), s);
-                        currentFile.delete();
-                    }
-                    file.delete();
-
-                }
-            }
 
 
-     
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

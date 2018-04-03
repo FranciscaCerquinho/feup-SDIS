@@ -7,13 +7,11 @@ public interface RMIinterface extends Remote{
 
 
 	void backup(String fileID,  int repDegree) throws RemoteException, UnknownHostException, InterruptedException;
-	void restore() throws RemoteException, UnknownHostException, InterruptedException;
+	void restore(String fileID) throws RemoteException, UnknownHostException, InterruptedException;
 	void delete(String fileID) throws RemoteException, UnknownHostException, InterruptedException;
-	void reclaim(int maxDiskSpace) throws RemoteException, UnknownHostException, InterruptedException;
+	void reclaim(int space) throws RemoteException, UnknownHostException, InterruptedException;
 	void state() throws RemoteException, UnknownHostException, InterruptedException;
-	//static void messageMC(byte[] message) throws RemoteException, UnknownHostException, InterruptedException;
-	//static void messageMDR(byte[] message) throws RemoteException, UnknownHostException, InterruptedException;
-	//static void messageMDB(byte[] message) throws RemoteException, UnknownHostException, InterruptedException;
+
 
 	
 }

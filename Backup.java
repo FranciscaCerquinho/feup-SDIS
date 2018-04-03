@@ -16,6 +16,15 @@ import java.util.Random;
 import java.util.concurrent.*;
 
 
+
+
+
+
+import java.util.Random;
+import java.util.concurrent.*;
+
+
+
 public class Backup implements Runnable{
 
 
@@ -25,11 +34,11 @@ public class Backup implements Runnable{
        // private FileInformation fileInformation;
         private Message message = new Message();
 
-    public Backup(File f, int RepDegree){
-       exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(50);
+    public Backup(File f, int repDegree){
+       exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(10000);
         file=f;
         this.repDegree=repDegree;
-      //  this.fileInformation=fileInformation;
+      
 
     }
 
@@ -57,36 +66,35 @@ public void run(){
                 String filePartName = String.format("%s.%03d", fileName, partCounter++);
                 File newFile = new File(file.getParent(), filePartName);
                 String path = file.getParent().toString();
-                String fileIdToEncrypt = path;
+                String fileIdToEncrypt = path + file.lastModified();
                 String fileIDencrypted = Utils.sha256(fileIdToEncrypt);
-                Chunk newChunk =  new Chunk(fileIDencrypted, partCounter, repDegree, buffer);
+            
+                byte[] resizedBuffer = Arrays.copyOfRange(buffer,0,bytesAmount);
+
+                Chunk newChunk =  new Chunk(fileIDencrypted, partCounter, repDegree, resizedBuffer);
                 Message message = new Message();
 
-                System.out.println("testiiing " + Peer.getPeerID());
-
+               
                 byte[] infoToSend = message.sendPutChunk(newChunk, Peer.getPeerID());
+               
+                    int rand = new Random().nextInt(401);   
 
-                
-
-                
-
-
-                ChunkInfo chunkInfo= new ChunkInfo(repDegree, partCounter);
-              //  fileInformation.addChunkInfo(chunkInfo);
-
-
-                    int rand = new Random().nextInt(400);   
-
-                exec.schedule(new SendMessageToChannel("mdb",infoToSend),rand,TimeUnit.MILLISECONDS);
-                   
+                exec.schedule(new SendMessageToChannel("mdb",infoToSend),0,TimeUnit.MILLISECONDS);
+                exec.schedule(new Retry(infoToSend, newChunk),1,TimeUnit.MILLISECONDS);
+               
+                  try{
+                        Thread.sleep(400);
+                        }catch(Exception ex){
+                            ex.printStackTrace();
+                        }
                   
             
             }
         }catch(IOException ex){
+
+               
             ex.printStackTrace();
-        }/*catch(InterruptedException ex){
-            ex.printStackTrace();
-        }*/
+        }
     }
 
 }

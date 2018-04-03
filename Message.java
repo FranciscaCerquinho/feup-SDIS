@@ -14,7 +14,7 @@ public class Message{
 
 		public  byte[] sendPutChunk(Chunk chunk,String peer_id){
 
-			String message = Header.PUTCHUNK + " " + VERSION +" " + peer_id + " " + chunk.getFileID() +" " + chunk.getChunkNo() + " " + chunk.getChunkReplication() +" " +"\r\n\r\n";
+			String message = Header.PUTCHUNK + " " + VERSION +" " + peer_id + " " + chunk.getFileID() +" " + chunk.getChunkNo() + " " + Integer.toString(chunk.getChunkReplication()) +" " +"\r\n\r\n";
 			byte[] test = Utils.concatBytes(message.getBytes(), chunk.getContent());
 			return test;
 		}
@@ -26,24 +26,24 @@ public class Message{
 			return test;
 		}
 
-		public byte[] getChunk(Chunk chunk, String peer_id){
+		public byte[] getChunk(String fileID, String chunkNo, String peer_id){
 
-			String message = Header.GETCHUNK + " " + VERSION +" " + peer_id + " " + chunk.getFileID() + " " + chunk.getChunkNo() +" "+"\r\n\r\n";
+			String message = Header.GETCHUNK + " " + VERSION +" " + peer_id + " " + fileID + " " + chunkNo +" "+"\r\n\r\n";
 			byte[] test = message.getBytes();
 			return test;
 		}
 
-		public byte[] chunked(Chunk chunk, String peer_id){
+		public byte[] chunked(String fileID, String chunkNo, String peer_id, byte[] content){
 
-			String message = Header.CHUNK + " " + VERSION +" " + peer_id + " " + chunk.getChunkNo() +" "+"\r\n\r\n";
-			byte[] test = Utils.concatBytes(message.getBytes(), chunk.getContent());
+			String message = Header.CHUNK + " " + VERSION +" " + peer_id + " " + fileID + " " +  chunkNo +" "+"\r\n\r\n";
+			byte[] test = Utils.concatBytes(message.getBytes(), content);
 			return test;
 
 		}
 
-		public byte[] deleted(Chunk chunk, String peer_id){
+		public byte[] deleted(String fileID, String peer_id){
 
-			String message = Header.DELETE + " " + VERSION +" " + peer_id + " " + chunk.getFileID() +" "+"\r\n\r\n";
+			String message = Header.DELETE + " " + VERSION +" " + peer_id + " " + fileID +" "+"\r\n\r\n";
 			byte[] test = message.getBytes();
 			return test;
 		}

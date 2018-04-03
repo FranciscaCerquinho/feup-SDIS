@@ -17,7 +17,7 @@ public class MessageTreatment implements Runnable{
 	
 
 	public MessageTreatment(byte[] messageToBeTreated){
-        exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(100);
+        exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(10000);
 
 		this.messageToBeTreated = messageToBeTreated;
 		
@@ -51,21 +51,64 @@ public class MessageTreatment implements Runnable{
       		case "PUTCHUNK":
           System.out.println(answer);
           byte[] body = Arrays.copyOfRange(this.messageToBeTreated, i+4, this.messageToBeTreated.length);
+       
            int rand = new Random().nextInt(400);
           
             exec.schedule(new PutChunk(body, splitAnswer),rand,TimeUnit.MILLISECONDS);
-
+         
       		
   				
 
       		break;
 
       		case "STORED":
+
+             
+
+              exec.execute(new Stored(splitAnswer));
       		
+              System.out.println(answer);
+            
+
+      		break;
+
+
+          case "DELETE":
+              System.out.println(answer);
+              int deleteRand = new Random().nextInt(400);
+              exec.schedule(new DeleteFile(splitAnswer),deleteRand,TimeUnit.MILLISECONDS);
+
+            break;
+
+
+
+          case "GETCHUNK":
+              System.out.println(answer);
+              int getChunkRand = new Random().nextInt(400);
+              exec.schedule(new RestoreFile(splitAnswer),0,TimeUnit.MILLISECONDS);
+            
+
+            break;
+
+
+          case "CHUNK":
+
+              System.out.println(answer);
+              int chunkedrand = new Random().nextInt(400);
+               byte[] bodyNew = Arrays.copyOfRange(this.messageToBeTreated, i+4, this.messageToBeTreated.length);
+
+               exec.schedule(new RebuildFile(splitAnswer,bodyNew),0,TimeUnit.MILLISECONDS);
+
+            break;
+
+
+          case "REMOVED":
 
             System.out.println(answer);
 
-      		break;
+            exec.schedule(new RemovedAndPut(splitAnswer),0,TimeUnit.MILLISECONDS);
+
+          break;
 
 
       		default:

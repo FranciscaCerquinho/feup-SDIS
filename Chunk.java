@@ -12,10 +12,10 @@ import java.util.List;
 
 public class Chunk {
 
-    private static String fileID;
-    private static int chunkNo;
-    private static int chunkReplication;
-    private static byte[] content;
+    private  String fileID;
+    private  int chunkNo;
+    private  int chunkReplication;
+    private  byte[] content;
 
     public Chunk(String fileID, int chunkNo, int chunkReplication, byte[] content){
 
@@ -25,19 +25,19 @@ public class Chunk {
         this.content=content;
     }
 
-    public static String getFileID(){
+    public  String getFileID(){
         return fileID;
     }
 
-    public static int getChunkNo(){
+    public  int getChunkNo(){
         return chunkNo;
     }
 
-    public static int getChunkReplication() {
+    public  int getChunkReplication() {
         return chunkReplication;
     }
 
-    public static byte[] getContent() {
+    public byte[] getContent() {
         return content;
     }
 }

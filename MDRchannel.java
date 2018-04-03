@@ -24,7 +24,7 @@ public class MDRchannel implements Runnable{
 	
 	public MDRchannel(String address, int port) throws UnknownHostException{
 
-			exec = Executors.newFixedThreadPool(100);
+			exec = Executors.newFixedThreadPool(10000);
 			
 
 		try {
@@ -80,7 +80,7 @@ public class MDRchannel implements Runnable{
 	public void run(){
 		
 
-		byte[] buf = new byte[64000];
+		byte[] buf = new byte[65000];
 		openSocket();
 
 		try{
@@ -93,16 +93,11 @@ public class MDRchannel implements Runnable{
 				
 
 
-				
-				//String answer = new String(msgReceiverPacket.getData());
-			
-				
-				//if(answer != null){
-					byte[] toSend = Arrays.copyOfRange(buf, 0, buf.length-1);
+		
+				byte[] toSend = Arrays.copyOfRange(buf,0, msgReceiverPacket.getLength());
 				
 				exec.execute(new MessageTreatment(toSend));
-			//}
-			
+		
 
 			
 		

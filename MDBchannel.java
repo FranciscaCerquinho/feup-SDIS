@@ -26,7 +26,7 @@ public class MDBchannel implements Runnable{
 	
 	public MDBchannel(String address, int port) throws UnknownHostException{
 
-			exec = Executors.newFixedThreadPool(100);
+			exec = Executors.newFixedThreadPool(1000);
 			
 
 		try {
@@ -81,7 +81,7 @@ public class MDBchannel implements Runnable{
 	public void run(){
 		
 
-		byte[] buf = new byte[64000];
+		byte[] buf = new byte[65000];
 		openSocket();
 
 		try{
@@ -90,14 +90,8 @@ public class MDBchannel implements Runnable{
 				DatagramPacket msgReceiverPacket = new DatagramPacket(buf,buf.length);
 				receiverSocket.receive(msgReceiverPacket);
 
-				String answer = new String(buf, 0, buf.length);
-					
-
 				
-				
-				
-				byte[] toSend = Arrays.copyOfRange(buf, 0, buf.length-1);
-				
+				byte[] toSend = Arrays.copyOfRange(buf,0, msgReceiverPacket.getLength());
 				
 				exec.execute(new MessageTreatment(toSend));
 			

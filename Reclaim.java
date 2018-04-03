@@ -1,41 +1,109 @@
 import java.util.ArrayList;
+import java.net.UnknownHostException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.security.MessageDigest;
+import java.util.List;
+import java.io.IOException;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import java.util.Random;
+import java.util.concurrent.*;
+
+
+
 
 public class Reclaim implements Runnable{
-/*
-    private int maxDiskSpace;
-    private int diskSpace;
-    private ArrayList<FileInformation> fileInformation;
 
-    public Reclaim(int maxDiskSpace, ArrayList<FileInformation> fileInformation){
-        this.maxDiskSpace=maxDiskSpace;
-        this.diskSpace=0;
-        this.fileInformation=fileInformation;
+   private int space;
+   private static ScheduledThreadPoolExecutor exec;
+    public Reclaim(int space){
+        this.space = space;
+        exec = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(50);
     }
 
-    public int getMaxDiskSpace(){
-        return maxDiskSpace;
-    }
-
-    public int getDiskSpace(){
-        return diskSpace;
-    }
-
-    public void updateDiskSpace(int space){
-        diskSpace+=space;
-    }*/
-
+    
     @Override
     public void run(){
 
-      //  int chunkSpace;
+        Peer.setSpaceValue(space);
+        int accumulatedSpace=0;
+        int i = 0;
+        int a = 0;
 
-        //ir buscar o espaço guardado em cada chunk store
+        for(; a < Peer.getStoredFile().size(); a++){
 
-        //for(int i=0; i < fileInformation.size();i++){
+             System.out.println("i enter and the files are " + Peer.getStoredFile().size());
 
-        //}
+            for(; i < Peer.getStoredFile().get(a).getChunks().size(); i++){
+                 System.out.println("i enter and the chunks are " + Peer.getStoredFile().get(a).getChunks().size());
+                if(accumulatedSpace < space && (accumulatedSpace + Peer.getStoredFile().get(a).getChunks().get(i).getContent().length) < space ){
+
+
+                    accumulatedSpace = accumulatedSpace + Peer.getStoredFile().get(a).getChunks().get(i).getContent().length;
+
+                    System.out.println("Accumulated space: "+ accumulatedSpace);
+
+
+
+
+
+                }else{
+                   
+                Message message = new Message();
+
+                System.out.println("lets send a message");
+
+                byte[] infoToSend = message.removed(Peer.getStoredFile().get(a).getChunks().get(i), Peer.getPeerID());
+
+                  Peer.getStoredFile().get(a).getChunks().remove(i);
+                  i = i-1;
+
+
+                exec.schedule(new SendMessageToChannel("mc",infoToSend),0,TimeUnit.MILLISECONDS);
+                }
+
+
+
+            }
+
+
+
+        }
+
+    
+
+
+
+
+
+
+
+
+
 
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

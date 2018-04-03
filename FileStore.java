@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class FileStore{
 
 
-	private static String fileID;
+	private  String fileID;
 	private ArrayList<Chunk> chunks = new ArrayList<>();
 	private int repDegree;
 
@@ -23,7 +23,7 @@ public class FileStore{
 	}
 
 
-	public static String getFileID(){
+	public  String getFileID(){
 		return fileID;
 	}
 

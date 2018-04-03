@@ -1,3 +1,4 @@
+
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -25,7 +26,7 @@ public class MultiCastChannel implements Runnable{
 	
 	public MultiCastChannel(String address, int port) throws UnknownHostException{
 
-			exec = Executors.newFixedThreadPool(100);
+			exec = Executors.newFixedThreadPool(1000);
 			
 
 		try {
@@ -80,7 +81,7 @@ public class MultiCastChannel implements Runnable{
 	public void run(){
 		
 
-		byte[] buf = new byte[64000];
+		byte[] buf = new byte[65000];
 		openSocket();
 
 		try{
@@ -94,13 +95,10 @@ public class MultiCastChannel implements Runnable{
 
 
 				
-				//String answer = new String(msgReceiverPacket.getData());
 			
-				
-				//if(answer != null){
 					byte[] toSend = Arrays.copyOfRange(buf, 0, buf.length-1);
 				exec.execute(new MessageTreatment(toSend));
-			//}
+			
 			
 
 		
